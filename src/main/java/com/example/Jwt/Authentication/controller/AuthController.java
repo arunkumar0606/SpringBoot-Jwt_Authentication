@@ -31,7 +31,11 @@ public class AuthController {
     public ResponseEntity<Object> getToken(@RequestBody EndUser endUser){
 
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken=new UsernamePasswordAuthenticationToken(endUser.getUserName(),endUser.getPassword());
-        System.out.println(authenticationManager.authenticate(usernamePasswordAuthenticationToken));
+        try {
+            authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid User");
+        }
 
         final UserDetails userDetails=userDetailsService.loadUserByUsername(endUser.getUserName());
 
@@ -42,6 +46,7 @@ public class AuthController {
 
     @GetMapping("/endUserData")
     public String data() {
+        System.out.println("Verified");
         return "THis is a secret data  = sd3zc5gb1wef12v";
     }
 }
