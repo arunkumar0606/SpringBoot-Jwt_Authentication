@@ -52,7 +52,7 @@ public class SecurityConfig {
                 )
                 .sessionManagement(session-> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.addFilterBefore(requestFilter, UsernamePasswordAuthenticationFilter.class);
-        http.httpBasic();
+        http.httpBasic(Customizer.withDefaults());
         return http.build();
 
     }
